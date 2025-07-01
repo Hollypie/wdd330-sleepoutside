@@ -20,6 +20,10 @@
 - `npm run start` starts up a local server and updates on any JS or CSS/SCSS
 - `npm run build` to build final files when you are ready to turn in.
 
+## Team Trello board
+
+Trello board link: https://trello.com/b/ngMSsRLe/sleep-outside-team-6
+
 ## 🚀 Production Site
 
 You can view the live site here: https://team6sleepoutside.netlify.app
