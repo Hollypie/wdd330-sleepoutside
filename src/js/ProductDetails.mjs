@@ -33,19 +33,16 @@ export default class ProductDetails {
 
 //  Display Product Details 
 function productDetailsTemplate(product) {
-  return `<section class="product-detail"> <h3>${product.Brand.Name}</h3>
-    <h2 class="divider">${product.NameWithoutBrand}</h2>
-    <img
-      class="divider"
-      src="${product.Image}"
-      alt="${product.NameWithoutBrand}"
-    />
-    <p class="product-card__price">$${product.FinalPrice}</p>
-    <p class="product__color">${product.Colors[0].ColorName}</p>
-    <p class="product__description">
-    ${product.DescriptionHtmlSimple}
-    </p>
-    <div class="product-detail__add">
-      <button id="addToCart" data-id="${product.Id}">Add to Cart</button>
-    </div></section>`;
+  document.querySelector("h2").textContent = product.Brand.Name;
+  document.querySelector("h3").textContent = product.NameWithoutBrand;
+
+  const productImage = document.getElementById("productImage");
+  productImage.src = product.Image;
+  productImage.alt = product.NameWithoutBrand;
+
+  document.getElementById("productPrice").textContent = product.FinalPrice;
+  document.getElementById("productColor").textContent = product.Colors[0].ColorName;
+  document.getElementById("productDesc").innerHTML = product.DescriptionHtmlSimple;
+
+  document.getElementById("addToCart").dataset.id = product.Id;
 }
