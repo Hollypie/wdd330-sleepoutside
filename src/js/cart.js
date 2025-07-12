@@ -19,6 +19,7 @@ function renderCartContents() {
   });
 
   displayTotal();
+  updateCartCount();
 }
 
 function cartItemTemplate(item) {
@@ -53,6 +54,7 @@ function removeItemFromCart(itemId) {
     cart.splice(index, 1); // Remove just one occurrence
     localStorage.setItem("so-cart", JSON.stringify(cart));
     renderCartContents(); // Re-render cart
+    updateCartCount();
   }
 }
 
@@ -74,3 +76,18 @@ function displayTotal() {
     totalElement.textContent = "Total: $0.00";
   }
 }
+
+function updateCartCount() {
+  const cart = getLocalStorage("so-cart") || [];
+  const countElement = document.getElementById("cartCount");
+  const count = cart.length;
+
+  if (count > 0) {
+    countElement.textContent = count;
+    countElement.style.display = "flex"; // Keep it centered
+  } else {
+    countElement.textContent = "";
+    countElement.style.display = "none";
+  }
+}
+updateCartCount(); // Initial load
