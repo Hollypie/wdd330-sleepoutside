@@ -284,3 +284,21 @@ footer {
 .hide {
   display: none;
 }
+
+.animate {
+  animation-name: cartAnimation;
+  animation-duration: 3s;
+  background-color: white;
+}
+
+
+@keyframes cartAnimation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+
+  100% {
+    transform: rotate(-365deg);
+  }
+}
