@@ -14,3 +14,13 @@ product.init();
 
 // Optional: If you want to log the actual product (for debugging)
 // dataSource.findProductById(productId).then(console.log);
+
+const myButton = document.getElementById('addToCart');
+const animatedCart = document.querySelector('.cart');
+
+
+myButton.addEventListener('click', function () {
+    animatedCart.classList.remove('animate');
+    void animatedCart.offsetWidth;
+    animatedCart.classList.add('animate');
+});
