@@ -59,16 +59,17 @@ function removeItemFromCart(itemId) {
 
 function displayTotal() {
   const cartItems = getLocalStorage("so-cart");
+  const footer = document.querySelector(".cart-footer");
+  const totalElement = document.querySelector(".cart-total");
+
   if (cartItems && cartItems.length > 0) {
     const total = cartItems.reduce((sum, item) => sum + Number(item.FinalPrice), 0);
-
-    // Show the cart-footer
-    const footer = document.querySelector(".cart-footer");
     footer.classList.remove("hide");
-
-    // Update the total in the DOM
-    const totalElement = document.querySelector(".cart-total");
     totalElement.textContent = `Total: $${total.toFixed(2)}`;
+  } else {
+    // Hide footer and clear total
+    footer.classList.add("hide");
+    totalElement.textContent = "Total: $0.00";
   }
 }
 
