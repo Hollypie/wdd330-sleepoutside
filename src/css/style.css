@@ -261,3 +261,10 @@ footer {
   font-size: var(--small-font);
   padding: 1em;
 }
+
+.cart-empty-message {
+  text-align: center;
+  font-size: var(--large-font);
+  color: var(--secondary-color);
+  padding: 2rem;
+}

@@ -1,7 +1,14 @@
 import { getLocalStorage } from "./utils.mjs";
 
 function renderCartContents() {
-  const cartItems = getLocalStorage("so-cart");
+  const cartItems = getLocalStorage("so-cart") || [];
+
+  if (cartItems.length === 0) {
+    document.querySelector(".product-list").innerHTML =
+      "<p class='cart-empty-message'>Your cart is empty.</p>";
+    return;
+  }
+
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
 }
