@@ -195,6 +195,25 @@ button {
 .product-card p {
   margin: 0.5em 0;
 }
+.product-card__price {
+  font-size: 1.2em;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #888;
+  margin-left: 0.5em;
+  font-size: 0.9em;
+}
+
+.discount-badge {
+  background-color: #e53935;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 5px;
+  margin-left: 0.5em;
+  font-size: 0.8em;
+}
 
 .card__brand {
   font-size: var(--small-font);
@@ -291,12 +310,10 @@ footer {
   background-color: white;
 }
 
-
 @keyframes cartAnimation {
   0% {
     transform: rotate(0deg);
   }
-
 
   100% {
     transform: rotate(-365deg);

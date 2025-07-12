@@ -4,7 +4,6 @@
 
 // If there are items in the cart, show the html element added above, then calculate the total of the items, create some HTML to display it ($${total}) and insert it into the element.
 
-
 import { getLocalStorage } from "./utils.mjs";
 
 function renderCartContents() {
@@ -63,7 +62,10 @@ function displayTotal() {
   const totalElement = document.querySelector(".cart-total");
 
   if (cartItems && cartItems.length > 0) {
-    const total = cartItems.reduce((sum, item) => sum + Number(item.FinalPrice), 0);
+    const total = cartItems.reduce(
+      (sum, item) => sum + Number(item.FinalPrice),
+      0,
+    );
     footer.classList.remove("hide");
     totalElement.textContent = `Total: $${total.toFixed(2)}`;
   } else {
@@ -72,4 +74,3 @@ function displayTotal() {
     totalElement.textContent = "Total: $0.00";
   }
 }
-
