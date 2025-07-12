@@ -1,3 +1,10 @@
+// Add HTML element to cart page to hold the total. Add a class and CSS to hide the element by default. We can use this same element later to also hold the Checkout button when we add that functionality. So something like to following might be appropriate: <div class="cart-footer hide"><p class="cart-total">Total: </p></div>
+
+// When the cart page loads, and after it has pulled any cart items from local storage check to see if there is anything in the cart
+
+// If there are items in the cart, show the html element added above, then calculate the total of the items, create some HTML to display it ($${total}) and insert it into the element.
+
+
 import { getLocalStorage } from "./utils.mjs";
 
 function renderCartContents() {
@@ -11,6 +18,8 @@ function renderCartContents() {
       removeItemFromCart(itemId);
     });
   });
+
+  displayTotal();
 }
 
 function cartItemTemplate(item) {
@@ -47,3 +56,19 @@ function removeItemFromCart(itemId) {
     renderCartContents(); // Re-render cart
   }
 }
+
+function displayTotal() {
+  const cartItems = getLocalStorage("so-cart");
+  if (cartItems && cartItems.length > 0) {
+    const total = cartItems.reduce((sum, item) => sum + Number(item.FinalPrice), 0);
+
+    // Show the cart-footer
+    const footer = document.querySelector(".cart-footer");
+    footer.classList.remove("hide");
+
+    // Update the total in the DOM
+    const totalElement = document.querySelector(".cart-total");
+    totalElement.textContent = `Total: $${total.toFixed(2)}`;
+  }
+}
+
