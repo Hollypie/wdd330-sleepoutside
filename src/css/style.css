@@ -274,3 +274,13 @@ footer {
   font-size: var(--small-font);
   padding: 1em;
 }
+
+.cart-footer {
+  text-align: right;
+  margin-top: 1rem;
+}
+
+/* To hide the total when the cart is empty */
+.hide {
+  display: none;
+}
