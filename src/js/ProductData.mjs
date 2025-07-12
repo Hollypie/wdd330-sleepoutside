@@ -2,15 +2,16 @@ function convertToJson(res) {
   if (res.ok) {
     return res.json();
   } else {
-    throw new Error("Bad Response: ${res.status} ${res.statusText}");
+    throw new Error(`Bad Response: ${res.status} ${res.statusText}`);
   }
 }
 
 export default class ProductData {
   constructor(category) {
     this.category = category;
-    this.path = "/json/${this.category}.json";
+    this.path = `/json/${this.category}.json`;
   }
+  
   getData() {
     return fetch(this.path)
       .then(convertToJson)
