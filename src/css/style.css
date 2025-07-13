@@ -131,6 +131,27 @@ button {
   fill: gray;
 }
 
+.cart {
+  position: relative;
+}
+
+.cart-count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: red;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(50%, -50%);
+}
+
 .cart-card {
   position: relative;
 }
@@ -194,6 +215,25 @@ button {
 .product-card h3,
 .product-card p {
   margin: 0.5em 0;
+}
+.product-card__price {
+  font-size: 1.2em;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #888;
+  margin-left: 0.5em;
+  font-size: 0.9em;
+}
+
+.discount-badge {
+  background-color: #e53935;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 5px;
+  margin-left: 0.5em;
+  font-size: 0.8em;
 }
 
 .card__brand {
@@ -291,12 +331,10 @@ footer {
   background-color: white;
 }
 
-
 @keyframes cartAnimation {
   0% {
     transform: rotate(0deg);
   }
-
 
   100% {
     transform: rotate(-365deg);

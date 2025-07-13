@@ -4,7 +4,6 @@
 
 // If there are items in the cart, show the html element added above, then calculate the total of the items, create some HTML to display it ($${total}) and insert it into the element.
 
-
 import { getLocalStorage } from "./utils.mjs";
 
 function renderCartContents() {
@@ -20,6 +19,7 @@ function renderCartContents() {
   });
 
   displayTotal();
+  updateCartCount();
 }
 
 function cartItemTemplate(item) {
@@ -54,6 +54,7 @@ function removeItemFromCart(itemId) {
     cart.splice(index, 1); // Remove just one occurrence
     localStorage.setItem("so-cart", JSON.stringify(cart));
     renderCartContents(); // Re-render cart
+    updateCartCount();
   }
 }
 
@@ -63,7 +64,10 @@ function displayTotal() {
   const totalElement = document.querySelector(".cart-total");
 
   if (cartItems && cartItems.length > 0) {
-    const total = cartItems.reduce((sum, item) => sum + Number(item.FinalPrice), 0);
+    const total = cartItems.reduce(
+      (sum, item) => sum + Number(item.FinalPrice),
+      0,
+    );
     footer.classList.remove("hide");
     totalElement.textContent = `Total: $${total.toFixed(2)}`;
   } else {
@@ -73,3 +77,17 @@ function displayTotal() {
   }
 }
 
+function updateCartCount() {
+  const cart = getLocalStorage("so-cart") || [];
+  const countElement = document.getElementById("cartCount");
+  const count = cart.length;
+
+  if (count > 0) {
+    countElement.textContent = count;
+    countElement.style.display = "flex"; // Keep it centered
+  } else {
+    countElement.textContent = "";
+    countElement.style.display = "none";
+  }
+}
+updateCartCount(); // Initial load
