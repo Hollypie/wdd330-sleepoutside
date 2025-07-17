@@ -1,10 +1,3 @@
-export function cartIconAnimationCallback() {
-  const cartIcon = document.querySelector(".cart svg");
-  if (cartIcon) {
-    cartIcon.classList.add("animate");
-  }
-}
-
 export function updateCartCountCallback() {
   const cartItems = JSON.parse(localStorage.getItem("so-cart")) || [];
   const count = cartItems.length;

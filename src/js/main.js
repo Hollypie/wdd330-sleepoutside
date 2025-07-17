@@ -1,32 +1,12 @@
-import {
-  loadHeaderFooter,
-  loadTemplate,
-  renderWithTemplate,
-} from "./utils.mjs";
-import {
-  cartIconAnimationCallback,
-  updateCartCountCallback,
-} from "./headerCallbacks";
+import { loadHeaderFooter } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
 import ProductList from "./ProductList.mjs";
 
-loadHeaderFooter();
-const headerElement = document.querySelector("#main-header");
-const path = window.location.pathname;
+loadHeaderFooter().then(() => {
+  const dataSource = new ProductData("tents");
+  const element = document.querySelector(".product-list");
+  const productList = new ProductList("Tents", dataSource, element);
 
-function getHeaderCallback(currentPath) {
-  if (currentPath.includes("/product-pages/")) return cartIconAnimationCallback;
-  if (currentPath.includes("/cart/")) return updateCartCountCallback;
-  return null; // index.html or other static pages
-}
-
-loadTemplate("/partials/header.html").then((template) => {
-  const callback = getHeaderCallback(path);
-  renderWithTemplate(template, headerElement, null, callback);
+  productList.init();
 });
 
-const dataSource = new ProductData("tents");
-const element = document.querySelector(".product-list");
-const productList = new ProductList("Tents", dataSource, element);
-
-productList.init();
