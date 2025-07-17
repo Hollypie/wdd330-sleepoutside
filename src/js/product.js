@@ -6,11 +6,13 @@ import ProductDetails from "./ProductDetails.mjs";
 const productId = getParam("product");
 
 // 2. Create a data source for the product type (e.g., tents)
-const dataSource = new ProductData("tents");
+const dataSource = new ProductData();
 
 // 3. Create and initialize the product details view
-const product = new ProductDetails(productId, dataSource);
-product.init();
+const product = await dataSource.findProductById(productId);
+const productDetailElement = document.querySelector(".product-detail");
+const prodDetail = new ProductDetails(product, productDetailElement);
+prodDetail.init();
 
 // Optional: If you want to log the actual product (for debugging)
 // dataSource.findProductById(productId).then(console.log);
