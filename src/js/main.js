@@ -9,4 +9,3 @@ loadHeaderFooter().then(() => {
 
   productList.init();
 });
-
