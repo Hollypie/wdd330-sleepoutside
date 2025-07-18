@@ -1,3 +1,4 @@
+import { updateCartCountCallback } from "./headerCallbacks";
 // wrapper for querySelector...returns matching element
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
@@ -37,4 +38,32 @@ export function renderListWithTemplate(template, parentElement, list, position =
     parentElement.innerHTML = "";
   }
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
+}
+
+export function renderWithTemplate(template, parentElement, data, callback) {
+  parentElement.innerHTML = template;
+  if (callback) {
+    callback(data);
+  }
+}
+
+export async function loadTemplate(path) {
+  const res = await fetch(path);
+  const template = await res.text();
+  return template;
+}
+
+export function loadHeaderFooter() {
+  const headerElement = document.querySelector("#main-header");
+  const footerElement = document.querySelector("#main-footer");
+
+  const headerPromise = loadTemplate("/partials/header.html").then((template) => {
+    renderWithTemplate(template, headerElement, null, updateCartCountCallback);
+  });
+
+  const footerPromise = loadTemplate("/partials/footer.html").then((template) => {
+    renderWithTemplate(template, footerElement);
+  });
+
+  return Promise.all([headerPromise, footerPromise]);
 }
