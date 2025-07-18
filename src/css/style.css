@@ -340,3 +340,37 @@ footer {
     transform: rotate(-365deg);
   }
 }
+
+.product-categories {
+  display: flex;
+  justify-content: center;
+  /* center all items horizontally */
+  gap: 2rem;
+  /* space between categories */
+  flex-wrap: wrap;
+  /* wrap on smaller screens */
+  margin: 2rem 0;
+}
+
+.product-category {
+  text-align: center;
+  /* center both image and text */
+  max-width: 150px;
+}
+
+.product-category img {
+  display: block;
+  margin: 0 auto;
+  /* center image */
+}
+
+.product-category a {
+  font-weight: bold;
+  margin-top: 0.5rem;
+  text-decoration: none;
+  color: black;
+}
+
+.product-category a:hover {
+  color: darkblue;
+}
