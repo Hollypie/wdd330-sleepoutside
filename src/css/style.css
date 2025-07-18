@@ -154,6 +154,7 @@ button {
 
 .cart-card {
   position: relative;
+  display: block;
 }
 .remove-button {
   position: absolute;
@@ -258,11 +259,15 @@ button {
 
 /* Start cart list card styles */
 .cart-card {
-  display: grid;
-  grid-template-columns: 25% auto 15%;
+  display: flex;
+  flex-direction: row;
+  /* Stack contents vertically */
+  gap: 0.5rem;
+  padding: 1rem;
+  border-bottom: 1px solid #ccc;
   font-size: var(--small-font);
-  /* max-height: 120px; */
-  align-items: center;
+  background-color: #f9f9f9;
+  /* optional for contrast */
 }
 
 .cart-card__image {
@@ -340,6 +345,7 @@ footer {
     transform: rotate(-365deg);
   }
 }
+
 
 .product-categories {
   display: flex;

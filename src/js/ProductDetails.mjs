@@ -1,4 +1,4 @@
-import { getLocalStorage, setLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, setClick, qs } from "./utils.mjs";
 
 export default class ProductDetails {
   constructor(productId, dataSource) {
@@ -8,64 +8,67 @@ export default class ProductDetails {
   }
 
   async init() {
-    this.product = await this.dataSource.findProductById(this.productId);
-    this.renderProductDetails();
-    document
-      .getElementById("addToCart")
-      .addEventListener("click", this.addProductToCart.bind(this));
-  }
+  this.product = await this.dataSource.findProductById(this.productId);
+  this.renderProductDetails();
 
-  addProductToCart() {
-    const cartItems = getLocalStorage("so-cart") || [];
-    cartItems.push(this.product);
-    setLocalStorage("so-cart", cartItems);
-  }
-
-  renderProductDetails() {
-    productDetailsTemplate(this.product);
+  const addToCartButton = document.getElementById("add-to-cart");
+  if (addToCartButton) {
+    addToCartButton.addEventListener("click", this.addProductToCart.bind(this));
   }
 }
 
+  addProductToCart() {
+  const cartItems = getLocalStorage("so-cart") || [];
+  cartItems.push(this.product);
+  setLocalStorage("so-cart", cartItems);
+
+  // 👉 Animate the cart when a product is added
+  const animatedCart = document.querySelector(".cart");
+  if (animatedCart) {
+    animatedCart.classList.remove("animate");
+    void animatedCart.offsetWidth;
+    animatedCart.classList.add("animate");
+  }
+}
+
+
+  renderProductDetails() {
+    document.querySelector("#product-details-container").innerHTML = productDetailsTemplate(this.product);
+  }
+
+}
 function productDetailsTemplate(product) {
-  document.querySelector("h2").textContent =
-    product.Category.charAt(0).toUpperCase() + product.Category.slice(1);
-  document.querySelector("#p-brand").textContent = product.Brand.Name;
-  document.querySelector("#p-name").textContent = product.NameWithoutBrand;
+  const isDiscounted = product.FinalPrice < product.SuggestedRetailPrice;
+  const discountPercentage = isDiscounted
+    ? Math.round(
+        ((product.SuggestedRetailPrice - product.FinalPrice) / product.SuggestedRetailPrice) * 100
+      )
+    : 0;
 
-  const productImage = document.querySelector("#p-image");
-  productImage.src = product.Images.PrimaryExtraLarge;
-  productImage.alt = product.NameWithoutBrand;
+  const color = product.Colors && product.Colors.length > 0
+    ? product.Colors[0].ColorName
+    : "N/A";
 
-  const usdPrice = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format(Number(product.FinalPrice));
-
-  document.querySelector("#p-price").textContent = `${usdPrice}`;
-  document.querySelector("#p-color").textContent =
-    product.Colors[0].ColorName;
-  document.querySelector("#p-description").innerHTML =
-    product.DescriptionHtmlSimple;
-
-  document.querySelector("#add-to-cart").dataset.id = product.Id;
-
-  // Optional: If you want to show discount logic, add this inside the function
-  const priceElement = document.querySelector("#p-price");
-  if (
-    product.SuggestedRetailPrice &&
-    product.FinalPrice < product.SuggestedRetailPrice
-  ) {
-    const discountPercentage = Math.round(
-      ((product.SuggestedRetailPrice - product.FinalPrice) /
-        product.SuggestedRetailPrice) *
-        100
-    );
-    priceElement.innerHTML = `
+  const priceHTML = isDiscounted
+    ? `
       <span class="discounted-price">$${product.FinalPrice.toFixed(2)}</span>
       <span class="original-price">$${product.SuggestedRetailPrice.toFixed(2)}</span>
       <span class="discount-badge">Save ${discountPercentage}%</span>
-    `;
-  } else {
-    priceElement.textContent = `$${product.FinalPrice.toFixed(2)}`;
-  }
+    `
+    : `$${product.FinalPrice.toFixed(2)}`;
+
+  return `
+    <section class="product-detail">
+      <h2 id="p-name">${product.Name}</h2>
+      <p id="p-brand" class="detail__brand">${product.Brand.Name}</p>
+      <img id="p-image" src="${product.Images.PrimaryExtraLarge}" alt="Image of ${product.Name}" />
+      
+      <p id="p-price" class="detail__price">${priceHTML}</p>
+      <p id="p-color">Color: ${color}</p>
+      <div id="p-description">${product.DescriptionHtmlSimple}</div>
+
+      <button id="add-to-cart" data-id="${product.Id}">Add to Cart</button>
+    </section>
+  `;
 }
+
