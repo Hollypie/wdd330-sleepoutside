@@ -154,6 +154,7 @@ button {
 
 .cart-card {
   position: relative;
+  display: block;
 }
 .remove-button {
   position: absolute;
@@ -258,11 +259,15 @@ button {
 
 /* Start cart list card styles */
 .cart-card {
-  display: grid;
-  grid-template-columns: 25% auto 15%;
+  display: flex;
+  flex-direction: row;
+  /* Stack contents vertically */
+  gap: 0.5rem;
+  padding: 1rem;
+  border-bottom: 1px solid #ccc;
   font-size: var(--small-font);
-  /* max-height: 120px; */
-  align-items: center;
+  background-color: #f9f9f9;
+  /* optional for contrast */
 }
 
 .cart-card__image {
@@ -339,4 +344,39 @@ footer {
   100% {
     transform: rotate(-365deg);
   }
+}
+
+
+.product-categories {
+  display: flex;
+  justify-content: center;
+  /* center all items horizontally */
+  gap: 2rem;
+  /* space between categories */
+  flex-wrap: wrap;
+  /* wrap on smaller screens */
+  margin: 2rem 0;
+}
+
+.product-category {
+  text-align: center;
+  /* center both image and text */
+  max-width: 150px;
+}
+
+.product-category img {
+  display: block;
+  margin: 0 auto;
+  /* center image */
+}
+
+.product-category a {
+  font-weight: bold;
+  margin-top: 0.5rem;
+  text-decoration: none;
+  color: black;
+}
+
+.product-category a:hover {
+  color: darkblue;
 }

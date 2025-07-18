@@ -1,7 +1,6 @@
-import { getLocalStorage, setLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, setClick, qs } from "./utils.mjs";
 
 export default class ProductDetails {
-
   constructor(productId, dataSource) {
     this.productId = productId;
     this.product = {};
@@ -9,55 +8,67 @@ export default class ProductDetails {
   }
 
   async init() {
-    // use the datasource to get the details for the current product. findProductById will return a promise! use await or .then() to process it
-    this.product = await this.dataSource.findProductById(this.productId);
-    // the product details are needed before rendering the HTML
-    this.renderProductDetails();
-    // once the HTML is rendered, add a listener to the Add to Cart button
-    // Notice the .bind(this). This callback will not work if the bind(this) is missing. Review the readings from this week on 'this' to understand why.
-    document
-      .getElementById("addToCart")
-      .addEventListener("click", this.addProductToCart.bind(this));
-  }
+  this.product = await this.dataSource.findProductById(this.productId);
+  this.renderProductDetails();
 
-  addProductToCart() {
-    const cartItems = getLocalStorage("so-cart") || [];
-    cartItems.push(this.product);
-    setLocalStorage("so-cart", cartItems);
-  }
-
-  renderProductDetails() {
-    productDetailsTemplate(this.product);
+  const addToCartButton = document.getElementById("add-to-cart");
+  if (addToCartButton) {
+    addToCartButton.addEventListener("click", this.addProductToCart.bind(this));
   }
 }
 
+  addProductToCart() {
+  const cartItems = getLocalStorage("so-cart") || [];
+  cartItems.push(this.product);
+  setLocalStorage("so-cart", cartItems);
+
+  // 👉 Animate the cart when a product is added
+  const animatedCart = document.querySelector(".cart");
+  if (animatedCart) {
+    animatedCart.classList.remove("animate");
+    void animatedCart.offsetWidth;
+    animatedCart.classList.add("animate");
+  }
+}
+
+
+  renderProductDetails() {
+    document.querySelector("#product-details-container").innerHTML = productDetailsTemplate(this.product);
+  }
+
+}
 function productDetailsTemplate(product) {
-  document.querySelector("h2").textContent = product.Brand.Name;
-  document.querySelector("h3").textContent = product.NameWithoutBrand;
-
-  const productImage = document.getElementById("productImage");
-  productImage.src = product.Image;
-  productImage.alt = product.NameWithoutBrand;
-
-  const priceElement = document.getElementById("productPrice");
   const isDiscounted = product.FinalPrice < product.SuggestedRetailPrice;
-  const discountPercentage = Math.round(
-    ((product.SuggestedRetailPrice - product.FinalPrice) / product.SuggestedRetailPrice) * 100
-  );
+  const discountPercentage = isDiscounted
+    ? Math.round(
+        ((product.SuggestedRetailPrice - product.FinalPrice) / product.SuggestedRetailPrice) * 100
+      )
+    : 0;
 
-  if (isDiscounted) {
-    priceElement.innerHTML = `
+  const color = product.Colors && product.Colors.length > 0
+    ? product.Colors[0].ColorName
+    : "N/A";
+
+  const priceHTML = isDiscounted
+    ? `
       <span class="discounted-price">$${product.FinalPrice.toFixed(2)}</span>
       <span class="original-price">$${product.SuggestedRetailPrice.toFixed(2)}</span>
       <span class="discount-badge">Save ${discountPercentage}%</span>
-    `;
-  } else {
-    priceElement.textContent = `$${product.FinalPrice.toFixed(2)}`;
-  }
+    `
+    : `$${product.FinalPrice.toFixed(2)}`;
 
-  document.getElementById("productColor").textContent = product.Colors[0].ColorName;
-  document.getElementById("productDesc").innerHTML = product.DescriptionHtmlSimple;
+  return `
+    <section class="product-detail">
+      <h2 id="p-name">${product.Name}</h2>
+      <p id="p-brand" class="detail__brand">${product.Brand.Name}</p>
+      <img id="p-image" src="${product.Images.PrimaryExtraLarge}" alt="Image of ${product.Name}" />
+      
+      <p id="p-price" class="detail__price">${priceHTML}</p>
+      <p id="p-color">Color: ${color}</p>
+      <div id="p-description">${product.DescriptionHtmlSimple}</div>
 
-  document.getElementById("addToCart").dataset.id = product.Id;
+      <button id="add-to-cart" data-id="${product.Id}">Add to Cart</button>
+    </section>
+  `;
 }
 

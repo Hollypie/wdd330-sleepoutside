@@ -4,17 +4,18 @@ function cartItemTemplate(item) {
   const color = item.Colors?.[0]?.ColorName || "N/A";
   return `<li class="cart-card divider">
     <a href="#" class="cart-card__image">
-      <img src="${item.Image}" alt="${item.Name}">
+      <img src="${item.Images?.PrimaryMedium || "/images/fallback.jpg"}" alt="${item.NameWithoutBrand || item.Name}">
     </a>
     <a href="#">
-      <h2 class="card__name">${item.Name}</h2>
+      <h2 class="card__name">${item.NameWithoutBrand || item.Name}</h2>
     </a>
     <p class="cart-card__color">${color}</p>
     <p class="cart-card__quantity">qty: 1</p>
-    <p class="cart-card__price">$${item.FinalPrice}</p>
+    <p class="cart-card__price">$${item.FinalPrice.toFixed(2)}</p>
     <button class="remove-button" data-id="${item.Id}" aria-label="Remove item">X</button>
   </li>`;
 }
+
 
 export default class ShoppingCart {
   constructor(listElement) {
