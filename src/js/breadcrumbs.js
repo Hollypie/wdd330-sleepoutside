@@ -30,13 +30,17 @@ export function generateBreadcrumb() {
   const cartItems = JSON.parse(localStorage.getItem("so-cart")) || [];
   const cartCount = cartItems.length;
 
-
+  
+    
     
   if (isProductListPage && category) {
-    const products = JSON.parse(localStorage.getItem("product-list")) || [];
+  setTimeout(() => {
+    const productCards = document.querySelectorAll(".product-card");
     breadcrumb.innerHTML = `
-      <a href="/">Home</a> &gt; ${capitalizedCategory} → (${products.length} items)
+      <a href="/">Home</a> &gt; ${capitalizedCategory} → (${productCards.length} items)
     `;
+    breadcrumb.style.display = "block";
+  }, 500);
   } else if (isProductDetailPage && category) {
     breadcrumb.innerHTML = `
       <a href="/">Home</a> &gt; <a href="/product_listing/index.html?category=${category}">${capitalizedCategory}</a> &gt; Product Details
