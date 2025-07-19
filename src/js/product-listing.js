@@ -1,6 +1,9 @@
 import { getParam, loadHeaderFooter } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
 import ProductList from "./ProductList.mjs";
+import { generateBreadcrumb } from "./breadcrumbs";
+
+generateBreadcrumb();
 
 loadHeaderFooter().then(() => {
   // Get the category from the query string (e.g., ?category=Tents)
