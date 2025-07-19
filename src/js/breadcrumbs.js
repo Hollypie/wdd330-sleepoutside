@@ -6,12 +6,12 @@ export function generateBreadcrumb() {
 
   const isHome =
     path === "/" ||
-    path.endsWith("index.html") &&
-    path.includes("/src/") &&
-    !path.includes("/cart/") &&
-    !path.includes("/checkout/") &&
-    !path.includes("/product_listing/") &&
-    !path.includes("/product_pages/");
+    (path.endsWith("index.html") &&
+      path.includes("/src/") &&
+      !path.includes("/cart/") &&
+      !path.includes("/checkout/") &&
+      !path.includes("/product_listing/") &&
+      !path.includes("/product_pages/"));
 
   if (isHome) {
     breadcrumb.innerHTML = "";
@@ -30,17 +30,14 @@ export function generateBreadcrumb() {
   const cartItems = JSON.parse(localStorage.getItem("so-cart")) || [];
   const cartCount = cartItems.length;
 
-  
-    
-    
   if (isProductListPage && category) {
-  setTimeout(() => {
-    const productCards = document.querySelectorAll(".product-card");
-    breadcrumb.innerHTML = `
+    setTimeout(() => {
+      const productCards = document.querySelectorAll(".product-card");
+      breadcrumb.innerHTML = `
       <a href="/">Home</a> &gt; ${capitalizedCategory} → (${productCards.length} items)
     `;
-    breadcrumb.style.display = "block";
-  }, 500);
+      breadcrumb.style.display = "block";
+    }, 500);
   } else if (isProductDetailPage && category) {
     breadcrumb.innerHTML = `
       <a href="/">Home</a> &gt; <a href="/product_listing/index.html?category=${category}">${capitalizedCategory}</a> &gt; Product Details

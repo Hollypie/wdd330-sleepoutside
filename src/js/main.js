@@ -4,10 +4,14 @@ import ProductList from "./ProductList.mjs";
 
 loadHeaderFooter().then(() => {
   const category = getParam("category");
-  
+
   const dataSource = new ProductData(category?.toLowerCase());
   const element = document.querySelector(".product-list");
-  const productList = new ProductList(category?.toLowerCase(), dataSource, element);
+  const productList = new ProductList(
+    category?.toLowerCase(),
+    dataSource,
+    element,
+  );
 
   productList.init();
 });
