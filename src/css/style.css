@@ -379,3 +379,34 @@ footer {
 .product-category a:hover {
   color: darkblue;
 }
+
+#nav-search-form {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 20px;
+}
+
+#nav-search-input {
+  padding: 6px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+  outline: none;
+  min-width: 180px;
+}
+
+#nav-search-form > div {
+  display: inline-block;
+}
+
+#nav-search-form button {
+  padding: 6px 12px;
+  font-size: 14px;
+  border: 1px solid #0077cc;
+  border-left: none;
+  border-radius: 0 4px 4px 0;
+  background-color: #0077cc;
+  color: white;
+  cursor: pointer;
+}

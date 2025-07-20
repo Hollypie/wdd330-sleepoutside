@@ -10,7 +10,23 @@
 
   <body>
     <header class="divider" id="main-header"></header>
+
     <nav class="breadcrumb" id="breadcrumb">Home</nav>
+
+    <form
+      id="nav-search-form"
+      style="display: inline-block; margin-right: 20px"
+    >
+      <input
+        type="text"
+        name="search"
+        id="nav-search-input"
+        placeholder="Search products..."
+        required
+      />
+      <div><button type="submit">Search</button></div>
+    </form>
+
     <main class="divider">
       <section class="products">
         <h2>Top Products: <span class="title highlight"></span></h2>
