@@ -77,6 +77,33 @@
           <a href="/product_listing/index.html?category=hammocks">Hammocks</a>
         </div>
       </div>
+      <div class="form">
+        <form method="get" action="thank-you.html">
+          <fieldset>
+            <div>Personal Info</div>
+            <label>First Name:<input required name="first-name" id="first-name" type="text" autocomplete="given-name" placeholder="John/Jane"></label>
+            <label>Last Name:<input required name="last-name" id="last-name" type="text" autocomplete="family-name" placeholder="Doe"></label>
+            <label>Email: <input required type="email" id="email" name="email" autocomplete="email" placeholder="example@gmail.com"></label>
+            <label>Phone: <input required type="tel" id="tel" autocomplete="tel" name="tel" placeholder="###-###-####"></label>
+          </fieldset>
+          <fieldset>
+            <div>Receive product updates for:</div>
+              <label>Tents <input type="checkbox" name="update" id="tent-update"></label>
+              <label>Backpacks <input type="checkbox" name="update" id="backpack-update"></label>
+              <label>Sleeping Bags <input type="checkbox" name="update" id="sleeping-update"></label>
+              <label>Hammocks <input type="checkbox" name="update" id="hammock-update"></label>
+          </fieldset>
+          <fieldset>
+            <div>Messages</div>
+            <label>Get Deal Alerts<input type="checkbox" name="form-deal" id="form-deal"></label>
+            <label>Get Coupon Alerts<input type="checkbox" name="coupon-alert" id="coupon-alert"></label>
+            <label class="quest"><span>Questions or Comments: </span><textarea name="description" id="description" placeholder="Type here"></textarea></label>
+            <input type="hidden" name="timestamp" id="timestamp" value="">
+            <input type="submit" value="Join Now">
+          </fieldset>
+        </form>
+      </div>
+
     </main>
 
     <footer id="main-footer"></footer>
