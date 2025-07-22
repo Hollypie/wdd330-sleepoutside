@@ -20,7 +20,7 @@ function packageItems(items) {
       id: item.Id,
       price: item.FinalPrice,
       name: item.Name,
-      quantity: 1,
+      quantity: item.Quantity ?? 1,
     };
   });
   return simplifiedItems;
@@ -54,7 +54,7 @@ export default class CheckoutProcess {
     // calculate the total of all the items in the cart
     const amounts = this.list.map((item) => item.FinalPrice);
     this.itemTotal = amounts.reduce((sum, item) => sum + item);
-    summaryElement.innerText = `$${this.itemTotal}`;;
+    summaryElement.innerText = `$${this.itemTotal.toFixed(2)}`;;
   }
 
   calculateOrderTotal() {
@@ -83,20 +83,24 @@ export default class CheckoutProcess {
 
   async checkout() {
     const formElement = document.forms["checkout"];
-    const order = formDataToJSON(formElement);
-
+    const order = formDataToJSON(formElement); 
     order.orderDate = new Date().toISOString();
-    order.orderTotal = this.orderTotal;
-    order.tax = this.tax;
-    order.shipping = this.shipping;
+    order.orderTotal = this.orderTotal.toFixed(2); 
+    order.tax = this.tax.toFixed(2);               
+    order.shipping = this.shipping;              
+
+    // Package items with correct shape
     order.items = packageItems(this.list);
-    //console.log(order);
 
     try {
       const response = await services.checkout(order);
-      console.log(response);
+      console.log("Order submitted:", response);
+      // Optional: show confirmation or redirect
+      alert("Order submitted successfully!");
+      localStorage.removeItem(this.key); // clear cart after successful order
     } catch (err) {
-      console.log(err);
+      console.error("Checkout failed:", err);
+      alert("Checkout failed. Please try again.");
     }
   }
 }

@@ -336,16 +336,15 @@ footer {
   cursor: pointer;
 }
 
-
 /* Container for checkout page */
 .checkout {
   max-width: 700px;
   margin: 2rem auto;
   padding: 1.5rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f9f9f9;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Headings */
@@ -353,7 +352,7 @@ footer {
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
   color: #333;
-  border-bottom: 2px solid #4CAF50;
+  border-bottom: 2px solid #4caf50;
   padding-bottom: 0.5rem;
 }
 
@@ -375,7 +374,7 @@ footer {
 /* Legends */
 .checkout-form legend {
   font-weight: 600;
-  color: #4CAF50;
+  color: #4caf50;
   padding: 0 0.5rem;
   font-size: 1.1rem;
 }
@@ -404,7 +403,7 @@ footer {
 .checkout-form input[type="email"]:focus,
 .checkout-form input[type="number"]:focus {
   outline: none;
-  border-color: #4CAF50;
+  border-color: #4caf50;
   box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
 }
 
@@ -433,7 +432,7 @@ footer {
   font-size: 1.1rem;
   font-weight: 700;
   color: white;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -445,7 +444,6 @@ footer {
 #checkoutSubmit:hover {
   background-color: #45a049;
 }
-
 
 /* To hide the total when the cart is empty */
 .hide {
@@ -532,4 +530,3 @@ footer {
   color: white;
   cursor: pointer;
 }
-
