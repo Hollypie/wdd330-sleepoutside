@@ -95,9 +95,8 @@ export default class CheckoutProcess {
     try {
       const response = await services.checkout(order);
       console.log("Order submitted:", response);
-      // Optional: show confirmation or redirect
+      //debug
       alert("Order submitted successfully!");
-      localStorage.removeItem(this.key); // clear cart after successful order
     } catch (err) {
       console.error("Checkout failed:", err);
       alert("Checkout failed. Please try again.");

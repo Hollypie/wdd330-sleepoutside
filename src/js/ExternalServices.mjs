@@ -1,12 +1,14 @@
 const baseURL = import.meta.env.VITE_SERVER_URL;
 
-function convertToJson(res) {
+async function convertToJson(res) {
   if (res.ok) {
     return res.json();
   } else {
-    throw new Error("Bad Response");
+    const errorText = await res.text(); 
+    throw new Error(`Bad Response: ${res.status} - ${errorText}`); 
   }
 }
+
 
 export default class ExternalServices {
   constructor() {
@@ -27,6 +29,7 @@ export default class ExternalServices {
   }
 
   async checkout(payload) {
+    console.log("Payload being sent:", payload);
     const options = {
       method: "POST",
       headers: {
@@ -34,6 +37,14 @@ export default class ExternalServices {
       },
       body: JSON.stringify(payload),
     };
-    return await fetch(`${baseURL}checkout/`, options).then(convertToJson);
+   try {
+      const response = await fetch(`${baseURL}checkout`, options);
+      const data = await convertToJson(response);
+      console.log("Server responded with:", data);
+      return data;
+    } catch (err) {
+      console.error("Checkout failed:", err.message);
+      throw err;
+    }
   }
 }
