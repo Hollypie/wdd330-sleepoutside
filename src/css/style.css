@@ -530,3 +530,72 @@ footer {
   color: white;
   cursor: pointer;
 }
+
+
+/* form */
+
+form {
+  width: 40%;
+  justify-self: center;
+}
+
+form fieldset {
+  display: flex;
+  flex-direction: column;
+  line-height: 30px;
+  justify-content: space-between;
+}
+
+form input {
+  padding: 15px;
+  margin-right: 15px;
+}
+
+form input[type="text"],
+input[type="email"] {
+  margin-bottom: 15px;
+}
+
+form .quest {
+  display: flex;
+  flex-direction: column;
+}
+
+form .quest #description {
+  width: 100%;
+  height: 100px;
+}
+
+form label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+input[type="checkbox"] {
+  width: 20px;
+  height: auto;
+}
+
+form input[type="submit"] {
+  background-color: gainsboro;
+  align-self: center;
+  width: 50%;
+  box-shadow: 3px 4px black;
+}
+
+input:required {
+  border-bottom: 5px solid orange;
+}
+
+input:required:invalid {
+  border-bottom: 5px solid red;
+}
+
+input:required:valid {
+  border-bottom: 5px solid green;
+}
+
+.thanks {
+  text-align: center;
+}
