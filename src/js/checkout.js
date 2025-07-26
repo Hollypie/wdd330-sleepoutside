@@ -13,10 +13,16 @@ loadHeaderFooter().then(() => {
     .querySelector("#zip")
     .addEventListener("blur", order.calculateOrderTotal.bind(order));
 
-  // listening for submit the form
-    document.forms["checkout"].addEventListener("submit", (e) => {
+  // Handle form submission with validation
+  const form = document.forms["checkout"];
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
-    order.checkout();
-    });
 
+    const isValid = form.checkValidity();
+    form.reportValidity();
+
+    if (isValid) {
+      order.checkout();
+    }
+  });
 });
