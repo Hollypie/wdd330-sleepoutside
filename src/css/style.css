@@ -103,7 +103,7 @@ button {
   padding: 0.5em 2em;
   background-color: var(--secondary-color);
   color: white;
-  margin: auto;
+  margin: 20px;
   display: block;
   border: 0;
   font-size: var(--large-font);
@@ -255,6 +255,18 @@ button {
 
 .product-detail img {
   width: 100%;
+}
+
+.wishlist-link a {
+  display: inline-block;
+  margin-top: 1rem;
+  color: #d63384;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.wishlist-link a:hover {
+  text-decoration: underline;
 }
 
 /* Start cart list card styles */

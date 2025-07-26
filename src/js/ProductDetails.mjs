@@ -15,6 +15,10 @@ export default class ProductDetails {
   if (addToCartButton) {
     addToCartButton.addEventListener("click", this.addProductToCart.bind(this));
   }
+  const addToWishlistButton = document.getElementById("add-to-wishlist");
+  if (addToWishlistButton) {
+    addToWishlistButton.addEventListener("click", this.addProductToWishlist.bind(this));
+  }
 }
 
   addProductToCart() {
@@ -28,6 +32,18 @@ export default class ProductDetails {
     animatedCart.classList.remove("animate");
     void animatedCart.offsetWidth;
     animatedCart.classList.add("animate");
+  }
+}
+  addProductToWishlist() {
+  const wishlist = getLocalStorage("so-wishlist") || [];
+  
+  // prevent duplicate
+  if (!wishlist.some(item => item.Id === this.product.Id)) {
+    wishlist.push(this.product);
+    setLocalStorage("so-wishlist", wishlist);
+    alert(`${this.product.Name} has been added to your wishlist.`);
+  } else {
+    alert("Product already in wishlist.");
   }
 }
 
@@ -68,6 +84,11 @@ function productDetailsTemplate(product) {
       <div id="p-description">${product.DescriptionHtmlSimple}</div>
 
       <button id="add-to-cart" data-id="${product.Id}">Add to Cart</button>
+      <button id="add-to-wishlist" data-id="${product.Id}">Add to Wishlist</button>
+      <div class="wishlist-link">
+        <a href="/wishlist/wishlist.html">💖 View My Wishlist</a>
+      </div>
+
     </section>
   `;
 }

@@ -11,6 +11,7 @@ export function generateBreadcrumb() {
       !path.includes("/cart/") &&
       !path.includes("/checkout/") &&
       !path.includes("/product_listing/") &&
+      !path.includes("/wishlist/") &&
       !path.includes("/product_pages/"));
 
   if (isHome) {
@@ -26,6 +27,7 @@ export function generateBreadcrumb() {
   const isProductDetailPage = path.includes("/product_pages/");
   const isCartPage = path.includes("/cart/");
   const isCheckoutPage = path.includes("/checkout/");
+  const isWishListPage = path.includes("/wishlist/");
 
   const cartItems = JSON.parse(localStorage.getItem("so-cart")) || [];
   const cartCount = cartItems.length;
@@ -50,6 +52,10 @@ export function generateBreadcrumb() {
     breadcrumb.innerHTML = `
       <a href="/">Home</a> &gt; <a href="/cart/index.html">Cart</a> &gt; Checkout (${cartCount} item${cartCount !== 1 ? "s" : ""})
     `;
+  } else if (isWishListPage) {
+    breadcrumb.innerHTML = `
+      <a href="/">Home</a> &gt; Wishlist
+  `;
   } else {
     // Fallback breadcrumb
     breadcrumb.innerHTML = `<a href="/">Home</a>`;
