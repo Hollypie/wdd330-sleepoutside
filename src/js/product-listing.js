@@ -2,6 +2,7 @@ import { getParam, loadHeaderFooter } from "./utils.mjs";
 import ExternalServices from "./ExternalServices.mjs";
 import ProductList from "./ProductList.mjs";
 import { generateBreadcrumb } from "./breadcrumbs";
+import Alerts from "./alert";
 
 document.addEventListener("DOMContentLoaded", () => {
   generateBreadcrumb();
@@ -72,3 +73,8 @@ function setupSearchForm() {
     });
   }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const alert = new Alerts('alerts.json', 'alerts')
+  alert.init()
+})
