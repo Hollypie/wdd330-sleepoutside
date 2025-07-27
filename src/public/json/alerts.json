@@ -1,0 +1,14 @@
+{
+    "alerts": [
+        {
+            "message": "This only a test",
+            "background": "darkblue",
+            "color": "white"
+        },
+        {
+            "message": "This is to test multiple alerts",
+            "background": "darkblue",
+            "color": "white"
+        }
+    ]
+}
