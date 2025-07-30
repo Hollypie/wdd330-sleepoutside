@@ -10,8 +10,12 @@ function cartItemTemplate(item) {
       <h2 class="card__name">${item.NameWithoutBrand || item.Name}</h2>
     </a>
     <p class="cart-card__color">${color}</p>
-    <p class="cart-card__quantity">qty: 1</p>
-    <p class="cart-card__price">$${item.FinalPrice.toFixed(2)}</p>
+    <p class="cart-card__quantity">
+      <button class="qty-button decrease" data-id="${item.Id}" aria-label="Decrease quantity">−</button>
+      <span class="qty-display">Quantity: ${item.quantity || 1}</span>
+      <button class="qty-button increase" data-id="${item.Id}" aria-label="Increase quantity">+</button>
+    </p>
+    <p class="cart-card__price">$${(item.FinalPrice * (item.quantity || 1)).toFixed(2)}</p>
     <button class="remove-button" data-id="${item.Id}" aria-label="Remove item">X</button>
   </li>`;
 }
@@ -34,15 +38,24 @@ export default class ShoppingCart {
     renderListWithTemplate(cartItemTemplate, this.listElement, cartItems, "afterbegin", true);
   }
 
-  registerRemoveHandlers() {
-    // Use event delegation for better reliability
-    this.listElement.addEventListener("click", (e) => {
-      if (e.target.classList.contains("remove-button")) {
-        const itemId = e.target.dataset.id;
-        this.removeItem(itemId);
-      }
-    });
-  }
+registerRemoveHandlers() {
+  this.listElement.addEventListener("click", (e) => {
+    const itemId = e.target.dataset.id;
+
+    if (e.target.classList.contains("remove-button")) {
+      this.removeItem(itemId);
+    }
+
+    if (e.target.classList.contains("increase")) {
+      this.changeQuantity(itemId, 1);
+    }
+
+    if (e.target.classList.contains("decrease")) {
+      this.changeQuantity(itemId, -1);
+    }
+  });
+}
+
 
   removeItem(itemId) {
     let cart = getLocalStorage(this.cartKey) || [];
@@ -57,16 +70,37 @@ export default class ShoppingCart {
 
 
   displayTotal(cartItems) {
-    const footer = document.querySelector(".cart-footer");
-    const totalElement = document.querySelector(".cart-total");
+  const footer = document.querySelector(".cart-footer");
+  const totalElement = document.querySelector(".cart-total");
 
-    if (cartItems.length > 0) {
-      const total = cartItems.reduce((sum, item) => sum + Number(item.FinalPrice), 0);
-      footer.classList.remove("hide");
-      totalElement.textContent = `Total: $${total.toFixed(2)}`;
-    } else {
-      footer.classList.add("hide");
-      totalElement.textContent = "Total: $0.00";
+  if (cartItems.length > 0) {
+    const total = cartItems.reduce((sum, item) => {
+      const quantity = item.quantity || 1;
+      return sum + (Number(item.FinalPrice) * quantity);
+    }, 0);
+
+    footer.classList.remove("hide");
+    totalElement.textContent = `Total: $${total.toFixed(2)}`;
+  } else {
+    footer.classList.add("hide");
+    totalElement.textContent = "Total: $0.00";
+  }
+}
+
+  changeQuantity(itemId, delta) {
+    const cart = getLocalStorage(this.cartKey) || [];
+    const itemIndex = cart.findIndex(item => item.Id === itemId);
+
+    if (itemIndex !== -1) {
+      cart[itemIndex].quantity = (cart[itemIndex].quantity || 1) + delta;
+
+      if (cart[itemIndex].quantity <= 0) {
+        cart.splice(itemIndex, 1); // Remove item if quantity is 0 or less
+      }
+
+      setLocalStorage(this.cartKey, cart);
+      this.renderCart(cart);
+      this.displayTotal(cart);
     }
   }
 }
