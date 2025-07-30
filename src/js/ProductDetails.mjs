@@ -23,8 +23,19 @@ export default class ProductDetails {
 
   addProductToCart() {
   const cartItems = getLocalStorage("so-cart") || [];
-  cartItems.push(this.product);
-  setLocalStorage("so-cart", cartItems);
+
+  const existingItemIndex = cartItems.findIndex(item => item.Id === this.product.Id);
+
+  if (existingItemIndex !== -1) {
+    // Product already in cart — increment quantity
+    cartItems[existingItemIndex].quantity = (cartItems[existingItemIndex].quantity || 1) + 1;
+  } else {
+    // Product not in cart — add it with quantity = 1
+    const productToAdd = { ...this.product, quantity: 1 };
+    cartItems.push(productToAdd);
+    }
+    
+    setLocalStorage("so-cart", cartItems);
 
   // 👉 Animate the cart when a product is added
   const animatedCart = document.querySelector(".cart");

@@ -163,6 +163,7 @@ button {
   background-color: var(--light-grey);
   color: red;
   padding: 6px 6px;
+  margin: 0 0 0 50px;
   cursor: pointer;
 }
 
@@ -564,4 +565,37 @@ footer {
   background-color: #0077cc;
   color: white;
   cursor: pointer;
+}
+
+.cart-card__quantity {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+}
+
+.cart-card__price {
+  flex-shrink: 0;
+  /* Prevent shrinking inside flex containers */
+  min-width: fit-content;
+  /* Ensure minimum width fits content */
+}
+.qty-button {
+  background-color: #676666;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.qty-button:hover {
+  background-color: #000000;
+}
+
+.qty-display {
+  min-width: 1.5rem;
+  text-align: center;
+  font-weight: bold;
 }
